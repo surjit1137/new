@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Happy Dashera!</title>
+  <style>
+    /* Background and base styles */
+    body {
+      background: linear-gradient(to bottom, #f6e27f, #f29559);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #6b2e00;
+      text-align: center;
+      padding: 40px 20px;
+      overflow-x: hidden;
+      position: relative;
+      min-height: 100vh;
+    }
+
+    /* Headings */
+    h1 {
+      font-size: 3.5em;
+      margin-bottom: 0.2em;
+      text-shadow:
+        3px 3px 6px #b85900,
+        0 0 10px #ffb347;
+      position: relative;
+      z-index: 10;
+    }
+
+    h1:nth-child(3) {
+      font-size: 2.5em;
+      margin-top: 0;
+      color: #b33e00;
+      text-shadow: 2px 2px 5px #ff6f00;
+    }
+
+    p {
+      font-size: 1.5em;
+      margin-bottom: 40px;
+      font-weight: 700;
+      text-shadow: 1px 1px 2px #ffb347;
+    }
+
+    /* Fireworks container */
+    .fireworks {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-bottom: 50px;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Firework base */
+    .firework {
+      width: 60px;
+      height: 60px;
+      background: radial-gradient(circle, #ff6f00, #ffca28);
+      border-radius: 50%;
+      position: relative;
+      box-shadow:
+        0 0 10px #ffca28,
+        0 0 20px #ff6f00;
+      animation: sparkle 2s infinite ease-in-out alternate;
+      filter: drop-shadow(0 0 6px #ff9800);
+    }
+
+    /* Firework spark arms */
+    .firework::before, .firework::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 6px;
+      height: 24px;
+      background: #ff6f00;
+      border-radius: 3px;
+      transform-origin: center center;
+      filter: drop-shadow(0 0 4px #ff9800);
+    }
+
+    .firework::before {
+      transform: translate(-50%, -50%) rotate(45deg);
+      animation: rotateSpark 3s linear infinite;
+    }
+
+    .firework::after {
+      transform: translate(-50%, -50%) rotate(-45deg);
+      animation: rotateSparkReverse 3s linear infinite;
+    }
+
+    /* Additional small sparkles inside fireworks */
+    .firework span {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: #ffd54f;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #ffeb3b;
+      animation: flickerSmall 1.5s infinite alternate;
+    }
+
+    .firework span:nth-child(1) {
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation-delay: 0s;
+    }
+
+    .firework span:nth-child(2) {
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+      animation-delay: 0.5s;
+    }
+
+    .firework span:nth-child(3) {
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation-delay: 1s;
+    }
+
+    /* Animations */
+    @keyframes sparkle {
+      0% {
+        box-shadow:
+          0 0 10px #ffca28,
+          0 0 20px #ff6f00;
+      }
+      100% {
+        box-shadow:
+          0 0 20px #ffca28,
+          0 0 40px #ff6f00;
+      }
+    }
+
+    @keyframes rotateSpark {
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    @keyframes rotateSparkReverse {
+      from { transform: translate(-50%, -50%) rotate(360deg); }
+      to { transform: translate(-50%, -50%) rotate(0deg); }
+    }
+
+    @keyframes flickerSmall {
+      0% { opacity: 0.4; }
+      100% { opacity: 1; }
+    }
+
+    /* Effigy styles */
+    .effigy {
+      width: 150px;
+      height: 250px;
+      margin: 0 auto;
+      position: relative;
+      filter: drop-shadow(0 0 10px #bf360c);
+      z-index: 10;
+    }
+
+    .effigy-body {
+      width: 100px;
+      height: 160px;
+      background: #d84315;
+      margin: 0 auto;
+      border-radius: 10px;
+      position: relative;
+      box-shadow: inset 0 0 15px #bf360c;
+      animation: pulseBody 3s ease-in-out infinite;
+    }
+
+    @keyframes pulseBody {
+      0%, 100% {
+        box-shadow: inset 0 0 15px #bf360c;
+      }
+      50% {
+        box-shadow: inset 0 0 25px #ff5722;
+      }
+    }
+
+    .effigy-head {
+      width: 80px;
+      height: 80px;
+      background: #ffab91;
+      border-radius: 50%;
+      position: absolute;
+      top: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      box-shadow: inset 0 0 10px #d84315;
+      animation: pulseHead 3s ease-in-out infinite;
+    }
+
+    @keyframes pulseHead {
+      0%, 100% {
+        box-shadow: inset 0 0 10px #d84315;
+      }
+      50% {
+        box-shadow: inset 0 0 20px #ff7043;
+      }
+    }
+
+    /* Flames - multiple layers for realism */
+    .flames {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 140px;
+      height: 80px;
+      border-radius: 50% 50% 0 0;
+      filter: drop-shadow(0 0 20px #ff3d00);
+      z-index: 15;
+      pointer-events: none;
+    }
+    .flame-layer {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      border-radius: 50% 50% 0 0;
+      transform: translateX(-50%);
+      animation: flicker 1.5s infinite alternate ease-in-out;
+      opacity: 0.9;
+    }
+    .flame1 {
+      width: 140px;
+      height: 80px;
+      background: radial-gradient(circle at center, #ff3d00, transparent 70%);
+      animation-delay: 0s;
+    }
+    .flame2 {
+      width: 120px;
+      height: 70px;
+      background: radial-gradient(circle at center, #ff6f00, transparent 70%);
+      animation-delay: 0.3s;
+      opacity: 0.7;
+    }
+    .flame3 {
+      width: 100px;
+      height: 60px;
+      background: radial-gradient(circle at center, #ffcc80, transparent 70%);
+      animation-delay: 0.6s;
+      opacity: 0.5;
+    }
+
+    @keyframes flicker {
+      0% { opacity: 0.8; transform: translateX(-50%) scale(1) translateY(0); }
+      50% { opacity: 1; transform: translateX(-50%) scale(1.05) translateY(-5px); }
+      100% { opacity: 0.8; transform: translateX(-50%) scale(1) translateY(0); }
+    }
+
+    /* Confetti animation */
+    .confetti-piece {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      background-color: #ffca28;
+      opacity: 0.9;
+      border-radius: 2px;
+      animation: confettiFall linear infinite;
+      z-index: 5;
+      filter: drop-shadow(0 0 3px #ffb300);
+    }
+
+    @keyframes confettiFall {
+      0% {
+        transform: translateY(-10vh) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Floating sparkles around headings */
+    .sparkle {
+      position: absolute;
+      background: radial-gradient(circle, #ffeb3b, transparent 70%);
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      filter: drop-shadow(0 0 6px #ffeb3b);
+      animation: sparkleFloat 3s ease-in-out infinite;
+      pointer-events: none;
+      opacity: 0.8;
+      z-index: 15;
+    }
+
+    @keyframes sparkleFloat {
+      0%, 100% {
+        transform: translateY(0) scale(1);
+        opacity: 0.8;
+      }
+      50% {
+        transform: translateY(-10px) scale(1.2);
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>✨ Happy Dashera! ✨</h1>
+  <p>May the victory of good over evil inspire you to overcome all challenges.</p>
+  <h1>Best Wishes from Surjit Rajput</h1>
+
+  <div class="fireworks">
+    <div class="firework">
+      <span></span><span></span><span></span>
+    </div>
+    <div class="firework">
+      <span></span><span></span><span></span>
+    </div>
+    <div class="firework">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+
+  <div class="effigy">
+    <div class="effigy-head"></div>
+    <div class="effigy-body"></div>
+    <div class="flames">
+      <div class="flame-layer flame1"></div>
+      <div class="flame-layer flame2"></div>
+      <div class="flame-layer flame3"></div>
+    </div>
+  </div>
+
+  <!-- Sparkles around first heading -->
+  <div class="sparkle" style="top: 10%; left: 30%; animation-delay: 0s;"></div>
+  <div class="sparkle" style="top: 15%; left: 70%; animation-delay: 1.5s;"></div>
+  <div class="sparkle" style="top: 5%; left: 50%; animation-delay: 0.8s;"></div>
+
+  <script>
+    // Confetti generator
+    const colors = ['#ffca28', '#ff6f00', '#ffd54f', '#ffb300'];
+    const confettiCount = 30;
+
+    for(let i = 0; i < confettiCount; i++) {
+      const confetti = document.createElement('div');
+      confetti.classList.add('confetti-piece');
+      confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      confetti.style.left = Math.random() * 100 + 'vw';
+      confetti.style.animationDuration = (3 + Math.random() * 5) + 's';
+      confetti.style.animationDelay = (Math.random() * 5) + 's';
+      confetti.style.width = confetti.style.height = (5 + Math.random() * 8) + 'px';
+      document.body.appendChild(confetti);
+    }
+  </script>
+</body>
+</html>
